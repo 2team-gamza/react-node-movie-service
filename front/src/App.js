@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 
@@ -26,11 +26,14 @@ function App() {
       });
   };
 
-  const loadButtonOnClick = () => {
+  useEffect(() => {
     axios.get("http://localhost:5000/movies").then((response) => {
       setMovies(response.data);
     });
-  };
+  }, [movies]);
+
+  // TODO 페이지에 진입하면 자동으로 보여지게 해야함 (useEffect() 참고)
+  // const loadButtonOnClick = () => {};
 
   return (
     <div>
@@ -48,10 +51,14 @@ function App() {
 
       <div>
         <h3>영화 등록하기!</h3>
+        <span>영화 이름: </span>
         <input type="text" value={name} onChange={nameOnChange}></input>
-        <input type="number" value={price} onChange={priceOnChange}></input>
+        <div>
+          <span>가격: </span>
+          <input type="number" value={price} onChange={priceOnChange}></input>
+        </div>
         <button onClick={buttonOnClick}>등록하기</button>
-        <button onClick={loadButtonOnClick}>불러오기</button>
+        {/* <button onClick={loadButtonOnClick}>불러오기</button> */}
       </div>
     </div>
   );
