@@ -27,7 +27,19 @@ step1(function (value1) {
 });
 ```
 
-- 비밀번호와 같은 git에 공유되서는 안되는 정보들을 어떻게 처리할지? - (비밀 설정 정복 관리, 환경 변수 등 참고)
+- 비밀번호와 같은 Public Github에 공유되서는 안되는 정보들을 어떻게 처리할지? - (비밀 설정 정복 관리, 환경 변수 등 참고)
+
+```
+const db = knex({
+  client: "mysql",
+  connection: {
+    host: "localhost",
+    user: "root",
+    database: "movie_db",
+    password: "0212",
+  },
+});
+```
 
 ### 백엔드
 
