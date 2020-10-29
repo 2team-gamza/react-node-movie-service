@@ -32,8 +32,22 @@ app.post("/movie", (req, res) => {
   const price = req.body.price;
 
   db.raw(`INSERT INTO movie(name, price) VALUES("${name}", ${price})`)
-    .then((response) => {
+    .then(() => {
       res.status(200).send("SUCCESS");
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).end("Error");
+    });
+});
+
+app.delete("/movie", (req, res) => {
+  // DELETE http://localhost:5000/movie?id=1
+  const id = req.query.id;
+
+  db.raw(`DELETE FROM movie WHERE id=${id}`)
+    .then(() => {
+      res.status(200).send("OK");
     })
     .catch((error) => {
       console.error(error);

@@ -26,24 +26,39 @@ function App() {
       });
   };
 
+  const deleteMovieBtnOnClick = (movieId) => {
+    axios
+      .delete(`http://localhost:5000/movie?id=${movieId}`)
+      .then((response) => {
+        alert("삭제가 완료되었습니다");
+      })
+      .catch((error) => {
+        alert("에러 발생");
+      });
+  };
+
   useEffect(() => {
     axios.get("http://localhost:5000/movies").then((response) => {
       setMovies(response.data);
     });
   }, [movies]);
 
-  // TODO 페이지에 진입하면 자동으로 보여지게 해야함 (useEffect() 참고)
-  // const loadButtonOnClick = () => {};
-
   return (
     <div>
-      <h2>영화 사이트! </h2>
+      <h2>영화 리스트! </h2>
       {movies.map((movie) => {
         return (
           <div key={movie.id}>
             <ul>
               <li>영화 제목: {movie.name}</li>
               <li>영화 가격: {movie.price}</li>
+              <button
+                onClick={() => {
+                  deleteMovieBtnOnClick(movie.id);
+                }}
+              >
+                삭제하기
+              </button>
             </ul>
           </div>
         );
@@ -58,7 +73,6 @@ function App() {
           <input type="number" value={price} onChange={priceOnChange}></input>
         </div>
         <button onClick={buttonOnClick}>등록하기</button>
-        {/* <button onClick={loadButtonOnClick}>불러오기</button> */}
       </div>
     </div>
   );
